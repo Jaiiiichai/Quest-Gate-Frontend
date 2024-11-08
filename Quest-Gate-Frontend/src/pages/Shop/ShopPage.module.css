@@ -1,0 +1,123 @@
+/* Reset styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    overflow: hidden;
+}
+
+/* Container styling */
+.container {
+    background-image: url('../../assets/Shop/SHOP BACKGROUND.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Shop owner image styling */
+.owner {
+    position: absolute;
+    bottom: 0;
+    left: 7%;
+    width: 40%;
+}
+
+/* Buy section styling */
+.buysec {
+    width: 40%;
+    height: 400px;
+    background-image: url('../../assets/Shop/BORSER FOR THE BUY SECTION.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 3%;
+    right: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Items container styling */
+.itemsell {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    gap: 20px; /* Spacing between items */
+    width: 90%;
+    padding: 10px;
+    margin-top: -55px;
+}
+
+/* Each item (potion) styling */
+.potion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Item image */
+.item {
+    width: 70px; /* Adjust size as needed */
+}
+
+/* Price image */
+.price {
+    width: 80px; /* Adjust size as needed */
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Item section styling */
+.itemsec {
+    width: 40%;
+    height: 400px;
+    background-image: url('../../assets/Shop/SHOP BORDER.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 47%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+}
+.details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 50%;
+    align-items: center;
+}
+.selectedItem{
+    border: 7px solid #c1b090;
+    padding: 10px;
+    background-color: #cdc1a7;
+}
+
+.itemdetails{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemdetails p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.showDetails{
+    color: green;
+}
+
+.options{
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.optionbutton{
+    width: 20%;
+}

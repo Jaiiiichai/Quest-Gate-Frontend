@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    overflow: hidden;
+    font-family: 'Pixelify Sans', sans-serif;
+}   
+
+/* Container styling */
+.container {
+    background-image: url('../../assets/Academia/BACKGROUND ACADEMIA.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+
+    position: relative;
+}
+.frame {
+    width: 40%;
+    height: 600px;
+    background-image: url('../../assets/Academia/BACKGROUND FRAME.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 6%;
+    top: 15%;
+}
+.teacher{
+    position: absolute;
+    bottom: 0%;
+    left: 10%;
+    width: 37%;
+}
+.lessons{
+    background-color: #4b340a;
+    color: white;
+    padding: 25px;
+    width: 70%;
+    margin-top: 20px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+ h1{
+    margin-top: -100px;
+    font-size: 40px;
+    margin-bottom: 40px;
+}

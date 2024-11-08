@@ -1,0 +1,75 @@
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    image-rendering: pixelated;
+    font-family: 'Pixelify Sans', sans-serif;
+    color: white;
+}
+
+/* Container */
+.container {
+    background-image: url('../../assets/StartScreen/homebg.png'); /* Adjust the path as necessary */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Form */
+.loginform {
+    background-color: transparent; /* Slightly transparent form background */
+    padding: 30px;
+    width: 400px;
+    text-align: left;
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+/* Form Group */
+.formgroup {
+    margin: 20px 0;
+    text-align: left;
+    color: white;
+}
+
+.formgroup label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.formgroup input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: transparent; /* Transparent background */
+    color: white;
+    outline: none;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 15px;
+}
+
+.formgroup input::placeholder {
+    color: #999;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Button */
+button {
+    width: 96%;
+    padding: 10px;
+    background-color: #4cb050;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+button:hover {
+    background-color: #3e8640;
+}
