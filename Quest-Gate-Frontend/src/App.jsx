@@ -8,6 +8,10 @@ import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/Login/LoginPage';
 import SignupPage from './pages/SignUp/SignupPage';
 import TownPage from './pages/Town/TownPage';
+import BattlePage from './pages/Battle/BattlePage';
+//import BattlePage from './pages/Battle/BattlePage';
+//import BattlePage from './pages/Battle/BattlePage';
+
 
 
 function App() {
@@ -15,13 +19,14 @@ function App() {
     <div>
     
       <Routes>
-        <Route path="/" element={<AcademiaPage />} />
+        <Route path="/" element={<BattlePage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/town" element={<TownPage />} />
+        <Route path="/academia" element={<AcademiaPage />} />
       </Routes>
     </div>
   );

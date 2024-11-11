@@ -42,7 +42,6 @@
     justify-content: center;
 }
 
-/* Items container styling */
 .itemsell {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 items per row */
