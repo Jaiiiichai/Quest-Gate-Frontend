@@ -1,0 +1,61 @@
+.container {
+    background-image: url('../../assets//Quest/NEW BG.png'); /* Adjust the path as necessary */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.questcontainer{
+    height: 80%;
+    width: 60%;
+    background-color: #ffde9f;
+    border-radius: 40px;
+    border: 20px solid #5c3308;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+}
+.item{
+    margin: auto;
+    margin-top: 20px;
+    height: 100px;
+    width: 80%;
+    background-color: #755d2d;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 10px solid #986e23;
+    border-radius: 20px;
+}
+.questlist{
+    overflow-y: auto;
+    height: 100%;
+    padding-top: 30px;
+}
+.questDetail{
+    background-image: url('../../assets//Quest/new background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    color: black;
+    width: 50%;
+    height: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.rewards{
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    width: 300px;
+    padding: 20px;
+}
+
