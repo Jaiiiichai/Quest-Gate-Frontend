@@ -8,12 +8,14 @@ import defense from '../../assets/Shop/DEFENSE POTION.png'
 import defensetxt from '../../assets/Shop/DEFENSE POTION 40 COINS.png'
 import cancel from '../../assets/Shop/CANCEL ICON.png'
 import buy from '../../assets/Shop/BUY ICON.png'
+import backButton from '../../assets/Quest/backbutton.png'
+import {Link} from 'react-router-dom'
 
 function ShopPage() {
     return (
         <div className={styles.container}>
             <img src={owner} alt="Shop Owner" className={styles.owner} />
-
+            <Link to="/town"><img src={backButton} alt="Quest Header" className={styles.backbutton} /></Link>
             <div className={styles.buysec}>
                 <div className={styles.itemsell}>
                     <div className={styles.potion}>

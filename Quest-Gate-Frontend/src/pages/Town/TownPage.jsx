@@ -9,6 +9,7 @@ import story from '../../assets/Town/Story_Button-removebg-preview.png'
 import quests from '../../assets/Town/Quests_Button-removebg-preview.png'
 import shop from '../../assets/Town/Shop_Button-removebg-preview.png'
 import coin from '../../assets/Town/coins.png'
+import {Link} from 'react-router-dom'
 
 function TownPage(){
     return(
@@ -29,10 +30,10 @@ function TownPage(){
                 </div>
             </div>
             <img src={character} alt="health" className={styles.anime} />
-            <img src={academia} alt="health" className={styles.academia} />
+            <Link to="/academia"><img src={academia} alt="health" className={styles.academia} /></Link>
             <img src={story} alt="health" className={styles.story} />
-            <img src={quests} alt="health" className={styles.quests} />
-            <img src={shop} alt="health" className={styles.shop} />
+             <Link to="/"> <img src={quests} alt="health" className={styles.quests} /></Link>
+            <Link to="/shop"><img src={shop} alt="health" className={styles.shop}/></Link>
             <div className={styles.coinslot}>
                  <img src={coin} alt="health" className={styles.coin} />
                  <p>1000</p>

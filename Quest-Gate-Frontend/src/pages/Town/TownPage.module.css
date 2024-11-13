@@ -22,6 +22,7 @@
     position: relative;
     background-repeat: no-repeat;
     display: flex;
+    color: white;
 }
 .avatar{
     width: 100%;
@@ -80,4 +81,10 @@
     margin-top: 10px;   
     border-radius: 20px;
     background-color: rgba(36, 34, 34, 0.5);
+}
+.anime{
+    position: absolute;
+    bottom: 0%;
+    width: 21%;
+    left: 10%;
 }
