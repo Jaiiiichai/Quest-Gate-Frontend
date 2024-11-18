@@ -88,3 +88,11 @@
     width: 21%;
     left: 10%;
 }
+.academia:hover,
+.quests:hover,
+.story:hover,
+.shop:hover,
+.story:hover {
+    transform: scale(1.1) !important; /* Apply zoom effect */
+    transition: transform 0.3s ease !important; /* Ensure smooth transition */
+}
