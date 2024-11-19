@@ -93,6 +93,6 @@
 .story:hover,
 .shop:hover,
 .story:hover {
-    transform: scale(1.1) !important; /* Apply zoom effect */
-    transition: transform 0.3s ease !important; /* Ensure smooth transition */
+    transform: scale(1.1) !important;
+    transition: transform 0.3s ease !important; 
 }

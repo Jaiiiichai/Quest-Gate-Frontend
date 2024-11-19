@@ -9,7 +9,7 @@
 
 /* Container styling */
 .container {
-    background-image: url('../../assets/Academia/BACKGROUND ACADEMIA.png');
+    background-image: url('../../assets/Academia/Academia Bg.png');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -20,7 +20,7 @@
 .frame {
     width: 40%;
     height: 600px;
-    background-image: url('../../assets/Academia/BACKGROUND FRAME.webp');
+    background-image: url('../../assets/Academia/BACKGROUND FRAME.png');
     background-size: contain;
     background-repeat: no-repeat;
     display: flex;
