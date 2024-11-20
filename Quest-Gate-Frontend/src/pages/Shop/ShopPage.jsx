@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAvatar } from '../../hooks/AvatarContext';
 import styles from './ShopPage.module.css';
+import coin from '../../assets/Town/coins.png';
+import { useLocation } from 'react-router-dom';
 
 function ShopPage() {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [isModalVisible, setModalVisible] = useState(false); // Modal visibility state
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState(''); // Message for modal
   const { avatarId } = useAvatar();
+  const location = useLocation();
+  const [userCoins, setUserCoins] = useState(location.state?.coins || 0); // Initialize coins
 
   useEffect(() => {
     const getItems = async () => {
@@ -25,19 +30,44 @@ function ShopPage() {
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
-
-  const addItemtoBag = async (item) => {
+  const updateCoins = async (newCoins) => {
     try {
-      await axios.post('http://localhost:3000/api/addItem', {
-        avatarId: avatarId,
-        itemId: item.item_id,
+      // Send the updated coins value to the backend
+      await axios.put('http://localhost:3000/api/updateAvatarCoins', {
+        avatarId: avatarId,  // Avatar ID
+        newCoins: newCoins,   // New coins value
       });
-
-      setModalVisible(true);
     } catch (err) {
-      console.log(err);
+      console.log("Error updating coins:", err);
     }
   };
+  
+
+  const addItemToBag = async (item) => {
+    if (item.price <= userCoins) {
+      try {
+        await axios.post('http://localhost:3000/api/addItem', {
+          avatarId: avatarId,
+          itemId: item.item_id,
+        });
+  
+        const updatedCoins = userCoins - item.price;
+        setUserCoins(updatedCoins); // Update local state
+  
+        // Send the updated coins to the backend
+        await updateCoins(updatedCoins); 
+  
+        setModalMessage(`You have successfully bought the ${item.item_name}!`);
+        setModalVisible(true);
+      } catch (err) {
+        console.log("Error adding item to bag:", err);
+      }
+    } else {
+      setModalMessage("You don't have enough coins to buy this item!");
+      setModalVisible(true);
+    }
+  };
+  
 
   const closeModal = () => {
     setModalVisible(false);
@@ -50,6 +80,10 @@ function ShopPage() {
       <Link to="/town">
         <img src="/assets/Shop/backbutton.png" alt="Back to Town" className={styles.backbutton} />
       </Link>
+      <div className={styles.coinslot}>
+        <img src={coin} alt="coin" className={styles.coin} />
+        <p>{userCoins}</p>
+      </div>
 
       <div className={styles.buysec}>
         <div className={styles.itemsell}>
@@ -95,7 +129,7 @@ function ShopPage() {
               src="/assets/Shop/BUY ICON.png"
               alt="Buy"
               className={styles.optionbutton}
-              onClick={() => addItemtoBag(selectedItem)} // Pass selected item
+              onClick={() => addItemToBag(selectedItem)} // Pass selected item
             />
           </div>
         </div>
@@ -105,9 +139,8 @@ function ShopPage() {
       {isModalVisible && (
         <div className={`${styles.modal} w3-animate-zoom`}>
           <div className={styles.modalContent}>
-            <h2>Item Purchased!</h2>
-            <p>You have successfully bought the {selectedItem?.item_name}!</p>
-            <p>Price: {selectedItem?.price} coins</p>
+            <h2>{modalMessage.includes('successfully') ? 'Item Purchased!' : 'Oops!'}</h2>
+            <p>{modalMessage}</p>
             <button onClick={closeModal} className={styles.closeButton}>
               Close
             </button>

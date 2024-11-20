@@ -1,22 +1,26 @@
-import styles from './TownPage.module.css'
-import avatar from '../../assets/Town/Profile view main Character.png'
-import attack from '../../assets/Town/Attack bar.png'
-import defense from '../../assets/Town/Defense Bar.png'
-import health from '../../assets/Town/Health bar.png'
-import character from '../../assets/Town/Anime Character.png'
-import academia from '../../assets/Town/academia-removebg-preview.png'
-import story from '../../assets/Town/Story_Button-removebg-preview.png'
-import quests from '../../assets/Town/Quests_Button-removebg-preview.png'
-import shop from '../../assets/Town/Shop_Button-removebg-preview.png'
-import coin from '../../assets/Town/coins.png'
-import { Link } from 'react-router-dom'
+// TownPage.js
+import { useState, useEffect } from 'react';
+import styles from './TownPage.module.css';
+import avatar from '../../assets/Town/Profile view main Character.png';
+import attack from '../../assets/Town/Attack bar.png';
+import defense from '../../assets/Town/Defense Bar.png';
+import health from '../../assets/Town/Health bar.png';
+import character from '../../assets/Town/Anime Character.png';
+import academia from '../../assets/Town/academia-removebg-preview.png';
+import story from '../../assets/Town/Story_Button-removebg-preview.png';
+import quests from '../../assets/Town/Quests_Button-removebg-preview.png';
+import shop from '../../assets/Town/Shop_Button-removebg-preview.png';
+import coin from '../../assets/Town/coins.png';
+import { Link, useLocation } from 'react-router-dom';
 import { useAvatar } from '../../hooks/AvatarContext';
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from 'axios';
+import InventoryModal from './InventoryModal'; // Import the modal component
 
 function TownPage() {
     const { avatarId } = useAvatar();
-    const [avatarData, setAvatarData] = useState(null); // State to store fetched avatar data
+    const [avatarData, setAvatarData] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false); // State for modal visibility
+    const location = useLocation();
 
     useEffect(() => {
         console.log("Avatar ID:", avatarId);
@@ -27,16 +31,24 @@ function TownPage() {
                     avatarId: avatarId
                 });
                 console.log(response.data);
-                setAvatarData(response.data); // Store data in state
+                setAvatarData(response.data);
             } catch (error) {
                 console.error("Fetch error:", error);
             }
         };
 
-        if (avatarId) { // Only fetch if avatarId is available
+        if (avatarId) {
             getAvatarData();
         }
-    }, [avatarId]);
+    }, [avatarId, location.key]);
+
+    const openInventoryModal = () => {
+        setIsModalVisible(true); // Show modal
+    };
+
+    const closeInventoryModal = () => {
+        setIsModalVisible(false); // Hide modal
+    };
 
     return (
         <div className={styles.container}>
@@ -59,11 +71,26 @@ function TownPage() {
             <Link to="/academia"><img src={academia} alt="academia" className={styles.academia} /></Link>
             <img src={story} alt="story" className={styles.story} />
             <Link to="/"><img src={quests} alt="quests" className={styles.quests} /></Link>
-            <Link to="/shop"><img src={shop} alt="shop" className={styles.shop} /></Link>
+            {avatarData && (
+                <Link to="/shop" state={{ coins: avatarData.coins }}>
+                    <img src={shop} alt="shop" className={styles.shop} />
+                </Link>
+            )}
+
+            {/* Button to trigger the modal */}
+            <button className={styles.inventoryButton} onClick={openInventoryModal}>
+                View Inventory
+            </button>
+
             <div className={styles.coinslot}>
                 <img src={coin} alt="coin" className={styles.coin} />
                 <p>{avatarData ? avatarData.coins : "Loading..."}</p>
             </div>
+
+            {/* Show the modal */}
+            {isModalVisible && (
+                <InventoryModal avatarId={avatarId} onClose={closeInventoryModal} />
+            )}
         </div>
     );
 }

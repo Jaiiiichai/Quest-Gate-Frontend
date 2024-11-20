@@ -176,4 +176,20 @@
   .closeButton:hover {
     background-color: #d32f2f;
   }
-  
+  .coin{
+    width: 10%;
+}
+.coinslot{
+    display: flex;
+    align-items: center;
+    position: absolute; 
+    left: 25%;
+    top: 0%;
+    border: 1px solid black;
+    width: 200px;
+    padding: 5px;
+    margin-top: 10px;   
+    border-radius: 20px;
+    background-color: rgba(22, 21, 21, 0.5);
+    color: white;
+}

@@ -59,7 +59,6 @@ const QuestListComponent = ({ data, onQuestClick }) => {
             <h3>{item.questname}</h3>
             <p>{item.detail}</p>
           </div>
-          <p><strong>Difficulty:</strong> {item.difficulty}</p>
         </div>
       ))}
     </div>
@@ -82,7 +81,6 @@ const QuestDetailComponent = ({ quest, onBack }) => (
   <div className={`${styles.questDetail} w3-animate-zoom`}>
     <div>
       <h3>{quest.questname}</h3>
-      <p><strong>Difficulty:</strong> {quest.difficulty}</p>
     </div>
     <p>{quest.detail}</p>
     <div className={styles.rewards}>

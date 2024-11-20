@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    image-rendering: pixelated;
+    font-family:Arial, Helvetica, sans-serif
+}
+
+/* Container */
+.container {
+    background-image: url('../../assets/Story/BACKGROUND MAP.jpg'); /* Adjust the path as necessary */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+
+}
+.backbutton{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 10%;
+    cursor: pointer;
+}
+.backbutton:hover{
+    transform: scale(1.1); /* Zoom in the tooltip */
+    transition: transform 0.3s ease;
+}
+.selectRegion{
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    background-color: blue;
+    width: 250px;
+    height: 50px;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    border: 5px solid black;
+    font-size: 1.4rem;
+    padding-top: 3px;
+}
+.townMap{
+    
+    width: 70px;
+    height: 100px;
+    object-fit: cover;
+    position: absolute;
+    bottom: 50%;
+    top: 46%;
+    left: 46%;
+}
+.townMap img {
+    width: 100%;
+}
+.imageContainer {
+    position: relative; /* Create a positioning context for the image and text */
+    display: inline-block; /* Ensure it wraps around the image size */
+  }
+  
+  .townImage {
+    display: block; /* Ensure proper layout for the image */
+    width: 100%; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .townHeading {
+    position: absolute; /* Position the heading over the image */
+    top: 50%; /* Adjust vertically; 50% centers it */
+    left: 50%; /* Adjust horizontally; 50% centers it */
+    transform: translate(-50%, -50%); /* Center accurately */
+    color: white; /* Text color (adjust as needed) */
+    font-size: 2rem; /* Adjust font size */
+    font-weight: bold; /* Make it stand out */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+    text-align: center; /* Center text alignment */
+  }
+  
+.region1 img{
+    width: 90%;
+}
+.region1{
+    object-fit: cover;
+    width: 400px;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+}
+.region3{
+    object-fit: cover;
+    width: 550px;
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+}
+.region3 img {
+    width: 70%;
+}
