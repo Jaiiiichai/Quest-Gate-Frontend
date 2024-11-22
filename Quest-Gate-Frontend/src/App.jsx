@@ -11,6 +11,9 @@ import TownPage from './pages/Town/TownPage';
 import BattlePage from './pages/Battle/BattlePage';
 import QuestPage from './pages/Quest/QuestPage';
 import RegionPage from './pages/Story/RegionPage';
+import LevelPage from './pages/Level/LevelPage';
+import CreateLessonPage from '../Test/CreateLessonPage';
+import LessonContent from './pages/Academia/LessonContent';
 
 
 
@@ -20,7 +23,7 @@ function App() {
     <div>
     
       <Routes>
-        <Route path="/" element={<RegionPage />} />
+        <Route path="/" element={<LessonContent />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />
         <Route path="/home" element={<HomePage />} />
@@ -30,6 +33,9 @@ function App() {
         <Route path="/academia" element={<AcademiaPage />} />
         <Route path='/battle' element={<BattlePage/>}/>
         <Route path="/quests" element={<QuestPage />} />
+        <Route path="/regions" element={<RegionPage />} />
+        <Route path="/levels" element={<LevelPage />} />
+        <Route path="/addlesson" element={<CreateLessonPage />} />
       </Routes>
     </div>
   );

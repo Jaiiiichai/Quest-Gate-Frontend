@@ -69,8 +69,8 @@ function TownPage() {
             </div>
             <img src={character} alt="health" className={styles.anime} />
             <Link to="/academia"><img src={academia} alt="academia" className={styles.academia} /></Link>
-            <img src={story} alt="story" className={styles.story} />
-            <Link to="/"><img src={quests} alt="quests" className={styles.quests} /></Link>
+            <Link to="/regions"><img src={story} alt="story" className={styles.story} /></Link>
+            <Link to="/quests"><img src={quests} alt="quests" className={styles.quests} /></Link>
             {avatarData && (
                 <Link to="/shop" state={{ coins: avatarData.coins }}>
                     <img src={shop} alt="shop" className={styles.shop} />

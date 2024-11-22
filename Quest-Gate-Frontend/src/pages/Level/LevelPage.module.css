@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    image-rendering: pixelated;
+    font-family:Arial, Helvetica, sans-serif
+}
+.container {
+    background-image: url('../../assets/Level/LEVEL BACKGROUND.JPG'); /* Adjust the path as necessary */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+
+}
+.backbutton{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 10%;
+    cursor: pointer;
+}
+.backbutton:hover{
+    transform: scale(1.1); 
+    transition: transform 0.3s ease;
+}
+.levelselect {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    background-color:#9a600b; /* Semi-transparent background */
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a slight shadow */
+    color: white;
+    z-index: 9999;
+}
+.levelselect:hover{
+    transform: translate(-50%, -50%) scale(1.2);
+    transition: transform 0.3s ease;
+    font-size: 2vw; /* Optional: slightly increase font size */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                 0 0 20px rgba(255, 255, 255, 0.6); /* Glow effect */
+    cursor: pointer;
+}
+.levelselect h3{
+    font-size: 60px;
+    font-weight: 600;
+    margin-top: -1px;
+    
+}
+.level1{
+    top: 50%;
+    left: 17%;
+}
+.level2{
+    top: 50%;
+    left: 34%;
+}
+.level3{
+    top: 50%;
+    left: 51%;
+}
+.level4{
+    top: 50%;
+    left: 68%;
+}
+.level5{
+    top: 50%;
+    left: 85%;
+}
+.line{
+    height: 5px;
+    width: 900px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+}

@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+
+}   
+
+/* Container styling */
+.container {
+    background-image: url('../../assets/Academia/Acad Bg.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.backbutton {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 10%;
+    cursor: pointer;
+}
+.backbutton:hover{
+    transform: scale(1.1); 
+    transition: transform 0.3s ease;
+}
+.lessonCon {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Ensures proper spacing */
+    align-items: center; /* Centers content horizontally */
+    height: 100%;
+    width: 70%;
+    padding: 20px;
+}
+
+.lessonTitle {
+    font-size: 2rem;
+    color: black;
+    text-align: center;
+    background-color: #ffde9f;
+    padding: 20px 30px; /* Add space around the text */
+    max-width: 100%; /* Ensure it doesn't exceed the container's width */
+    word-wrap: break-word; /* Wrap text if it's too long */
+    display: inline-block; /* Shrinks to fit the text length */
+    border-radius: 10px; /* Optional: for rounded corners */
+    border: 5px solid #5c3208;
+}
+
+
+.lessonContentContainer {
+    width: 80%;
+    height: 100%;
+    background-color: #ffde9f;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    color: black;
+    text-align: left;
+    overflow-y: auto; /* Adds scroll if content overflows */
+    border: 20px solid #5c3208;
+    border-radius: 50px;
+    margin-bottom:10px;
+    font-size: 18px;
+    padding: 20px;
+}
+
+.takeQuizBut {
+    width: 150px;
+    height: 50px;
+    position: relative;
+    align-self: center; /* Ensures the button stays in the center of the bottom */
+    margin-bottom: 10px; /* Adds spacing at the bottom */
+    cursor: pointer;
+    background-color: #5c3208;
+}
+.takeQuizBut:hover{
+    background-color: #be6a15;
+}

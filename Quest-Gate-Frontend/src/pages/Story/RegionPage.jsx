@@ -22,17 +22,17 @@ Vocabulary
 function RegionPage(){
     return(
         <div className={styles.container}>
-    <Link to="/town">
+    <Link to="/regions">
         <img src="/assets/Shop/backbutton.png" alt="Back to Town" className={styles.backbutton} />
     </Link>
-    <div className={styles.mapWrapper}>
-        <h1 className={`${styles.regionText} ${styles.vocabularytxt}`}>Frostword Vale</h1>
-        <h1 className={`${styles.regionText} ${styles.grammartxt}`}>Grammatica Highlands</h1>
-        <h1 className={`${styles.regionText} ${styles.kanjitxt}`}>Kanaji Isles</h1>
-        <h1 className={`${styles.regionText} ${styles.chattxt}`}>Chattermoor Valley</h1>
-        <h1 className={`${styles.regionText} ${styles.towntxt}`}>Linguara Haven</h1>
-    </div>
-</div>
+            <div className={styles.mapWrapper}>
+                <Link to="/levels"><h1 className={`${styles.regionText} ${styles.vocabularytxt}`}>Frostword Vale</h1></Link>
+                <h1 className={`${styles.regionText} ${styles.grammartxt}`}>Grammatica Highlands</h1>
+                <h1 className={`${styles.regionText} ${styles.kanjitxt}`}>Kanaji Isles</h1>
+                <h1 className={`${styles.regionText} ${styles.chattxt}`}>Chattermoor Valley</h1>
+                <h1 className={`${styles.regionText} ${styles.towntxt}`}>Linguara Haven</h1>
+            </div>
+        </div>
 
     );
 }

@@ -1,3 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    image-rendering: pixelated;
+    font-family:Arial, Helvetica, sans-serif
+}
+
 .container {
     height: 100vh;
     background-color: #234e4b;
@@ -21,8 +29,19 @@
     font-size: 1.7vw; /* Responsive font size */
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-    transform: translate(-50%, -50%); /* Center the text based on its own size */
+    transform: translate(-50%, -50%); /* Center the text */
+    transition: transform 0.2s ease, font-size 0.2s ease, text-shadow 0.2s ease; /* Smooth animation */
 }
+
+.regionText:hover {
+    transform: translate(-50%, -50%) scale(1.1); /* Slightly increase the size */
+    font-size: 2vw; /* Optional: slightly increase font size */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                 0 0 20px rgba(255, 255, 255, 0.6); /* Glow effect */
+    cursor: pointer;
+}
+
+
 
 /* Individual Region Positions */
 .vocabularytxt {
