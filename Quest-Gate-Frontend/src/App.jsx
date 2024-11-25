@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import ShopPage from './pages/Shop/ShopPage';
 import AcademiaPage from './pages/Academia/AcademiaPage';
-
+import LandingPage from './pages/LandingPage/LandingPage';
 import LoadingScreen from './pages/LoadingScreen/LoadingScreen';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/Login/LoginPage';
@@ -24,7 +24,8 @@ function App() {
     <div>
     
       <Routes>
-        <Route path="/" element={<QuizPage/>} />
+        <Route path="/LandingPage" element={<LandingPage />} />
+        <Route path="/" element={<QuizPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />
         <Route path="/home" element={<HomePage />} />

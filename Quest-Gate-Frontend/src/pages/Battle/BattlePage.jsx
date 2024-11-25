@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import styles from '../Battle/BattlePage.module.css';
 import avatar from '../../assets/Town/Profile view main Character.png';
-import kapre from '../../assets/Battle/KAPRE MODEL.png';
+//import kapre from '../../assets/Battle/KAPRE MODEL.png';
+import skeleton from '../../assets/Enemies/skeleton.gif'
 // import tiyanak from '../../assets/Battle/TIYANAK MODEL.png'
 // import tikbalang from '../../assets/Battle/TIKBALANG MODEL.png'
 import knight from '../../assets/Battle/knight_idle.gif'
@@ -53,7 +54,7 @@ function BattlePage() {
                         <span className={styles.enemyHealthText}>{enemyHealth}/{maxHealth}</span>
                     </div>
 
-                    <img src={kapre} alt="enemy" className={styles.enemychar} />
+                    <img src={skeleton} alt="enemy" className={styles.enemychar} />
                     <img src={knight} alt="player" className={styles.playchar} />
                 </div>
 
