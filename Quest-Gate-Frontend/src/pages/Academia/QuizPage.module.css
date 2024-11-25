@@ -1,0 +1,154 @@
+.container {
+    background-image: url('../../assets/Academia/Acad Bg.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.backbutton {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 10%;
+    cursor: pointer;
+}
+
+.backbutton:hover {
+    transform: scale(1.1); 
+    transition: transform 0.3s ease;
+}
+
+.quizcon {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    color: white;
+}
+
+.quizContainer {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    max-height: 600px;
+    margin-bottom: 20px;
+    padding: 30px;
+    background-color: #ffde9f;
+    border: 20px solid #5c3208;
+    border-radius: 50px;
+}
+
+.quizCard {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    color: black;
+}
+
+.question {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates 2 columns */
+    gap: 15px; /* Adds space between the choices */
+    margin-top: 10px;
+    text-align: left;
+}
+
+.choiceBox {
+    padding: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Style for selected choices */
+.choiceBox.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.choiceBox:hover {
+    background-color: #ccc;
+}
+
+.choiceLabel {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+/* Hide the radio buttons */
+.choiceBox input {
+    display: none;
+}
+
+.submitquiz {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    width: 200px;
+    margin: auto;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submitquiz:hover {
+    background-color: #45a049;
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: black;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .closeButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .closeButton:hover {
+    background-color: #0056b3;
+  }
+  

@@ -14,6 +14,7 @@ import RegionPage from './pages/Story/RegionPage';
 import LevelPage from './pages/Level/LevelPage';
 import CreateLessonPage from '../Test/CreateLessonPage';
 import LessonContent from './pages/Academia/LessonContent';
+import QuizPage from './pages/Academia/QuizPage'
 
 
 
@@ -23,7 +24,7 @@ function App() {
     <div>
     
       <Routes>
-        <Route path="/" element={<LessonContent />} />
+        <Route path="/" element={<QuizPage/>} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />
         <Route path="/home" element={<HomePage />} />
@@ -36,6 +37,7 @@ function App() {
         <Route path="/regions" element={<RegionPage />} />
         <Route path="/levels" element={<LevelPage />} />
         <Route path="/addlesson" element={<CreateLessonPage />} />
+        <Route path="/lessonContent" element={<LessonContent />} />
       </Routes>
     </div>
   );

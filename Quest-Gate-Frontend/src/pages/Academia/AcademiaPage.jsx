@@ -51,13 +51,23 @@ function AcademiaPage() {
                 <h1 className={styles.text}>Select Lesson Type</h1>
                 {selectedCategory ? (
                     <div className={styles.categoryContent}>
+                        <button 
+                            className={styles.backToCategoriesButton} 
+                            onClick={() => setSelectedCategory('')}
+                        >
+                            Back
+                        </button>
                         <div className={styles.lessonsContainer}>
                             {categoryData.length ? (
                                 categoryData.map((lesson, index) => (
                                     <Link 
-                                        to="/" 
+                                        to="/lessonContent" 
                                         key={index} 
-                                        state={{ lessonId: lesson.lesson_id,lessonName: lesson.lesson_name, lessonContent: lesson.lesson_content }}
+                                        state={{
+                                            lessonId: lesson.lesson_id, 
+                                            lessonName: lesson.lesson_name, 
+                                            lessonContent: lesson.lesson_content
+                                        }}
                                         className={styles.lessons}
                                     >
                                         {lesson.lesson_name}
@@ -89,6 +99,7 @@ function AcademiaPage() {
             </div>
         </div>
     );
+    
 }
 
 export default AcademiaPage;

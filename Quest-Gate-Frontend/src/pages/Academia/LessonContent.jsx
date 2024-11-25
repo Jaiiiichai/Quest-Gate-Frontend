@@ -1,11 +1,13 @@
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom'; // Import useLocation for accessing the location
 import styles from './LessonContent.module.css';
 import backButton from '../../assets/Quest/backbutton.png';
 import { Link } from 'react-router-dom';
 
 function LessonContent() {
     const location = useLocation(); // Get data from the previous page
-    const { lessonName, lessonContent } = location.state || {}; // Destructure the lesson data
+    const { lessonName, lessonContent, lessonId } = location.state || {}; // Destructure lesson data
+    console.log(lessonId)
+    console.log(lessonName)
 
     // Function to convert newlines (\n) to <br /> tags
     const formatContent = (content) => {
@@ -27,7 +29,11 @@ function LessonContent() {
                 <div className={styles.lessonContentContainer}>
                     {formatContent(lessonContent)}
                 </div>
-                <button className={styles.takeQuizBut}>Take Quiz</button>
+
+                {/* Pass lesson_id as part of the URL for the quiz page */}
+                <Link to="/" state = {{lessonId: lessonId}}>
+                    <button className={styles.takeQuizBut}>Take Quiz</button>
+                </Link>
             </div>
         </div>
     );
