@@ -15,6 +15,7 @@ import LevelPage from './pages/Level/LevelPage';
 import CreateLessonPage from '../Test/CreateLessonPage';
 import LessonContent from './pages/Academia/LessonContent';
 import QuizPage from './pages/Academia/QuizPage'
+import AddQuizForm from '../Test/AddQuizForm';
 
 
 
@@ -25,6 +26,7 @@ function App() {
     
       <Routes>
         <Route path="/LandingPage" element={<LandingPage />} />
+        <Route path="/addQuiz" element={<AddQuizForm />} />
         <Route path="/" element={<QuizPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />

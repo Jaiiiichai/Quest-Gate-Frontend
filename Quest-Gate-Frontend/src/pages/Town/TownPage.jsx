@@ -89,7 +89,7 @@ function TownPage() {
 
             {/* Show the modal */}
             {isModalVisible && (
-                <InventoryModal avatarId={avatarId} onClose={closeInventoryModal} />
+                <InventoryModal avatarId={avatarId} onClose={closeInventoryModal}   isButtonDisabled= {true} />
             )}
         </div>
     );

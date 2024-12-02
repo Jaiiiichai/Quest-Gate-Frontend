@@ -34,6 +34,7 @@
   
   .item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: #dddddd;
     padding: 15px;
@@ -70,5 +71,20 @@
   
   .closeButton:hover {
     background-color: #ff4b4b;
+  }
+  .useButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    width: 100px;
+  }
+  
+  .useButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
   

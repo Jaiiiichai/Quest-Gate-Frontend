@@ -1,56 +1,56 @@
-.screencontainer{
-    background-color: lightblue;
-}
+    .screencontainer{
+        background-color: lightblue;
+    }
 
-.battlecontainer {
-    margin: auto;
-    width: 80%;
-    height: 100vh; /* Full viewport height */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center horizontally if needed */
-    justify-content: center; /* Center vertically if needed */
-}
+    .battlecontainer {
+        margin: auto;
+        width: 80%;
+        height: 100vh; /* Full viewport height */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center horizontally if needed */
+        justify-content: center; /* Center vertically if needed */
+        color: white
+    }
 
-.charscreen {
-    background-image: url('../../assets/Battle/bg3.png'); /* Path to your image */
-    background-size:contain; /* or use cover based on your need */
-    background-position: center;
-    background-repeat: no-repeat; /* Prevents tiling */
-    width: 92.6%;
-    height: 60%; /* Adjust height for layout */
-    background-color: red;
-    position: relative;
-}
-.enemychar{
-    position: absolute;
-    width: 20%;
-    bottom: 5%;
-    right: 20%;
-}
-.playchar{
-    position: absolute;
-    width: 60%;
-    bottom: 5%;
-}
+    .charscreen {
+        width: 92.6%;
+        height: 60%;
+        position: relative;
+    }
+    .enemychar{
+        position: absolute;
+        width: 20%;
+        bottom: 5%;
+        right: 20%;
+    }
+    .playchar{
+        position: absolute;
+        width: 60%;
+        bottom: 5%;
+    }
+ /* Fixed width for the container, so it won't change */
 .enemyHealthBarContainer {
     position: absolute;
-    top: 10px; /* Position at the top */
+    top: 30px;
     left: 50%;
-    transform: translateX(-50%); /* Center the health bar */
-    width: 80%; /* Width of the bar */
-    max-width: 500px; /* Max width of the bar */
+    transform: translateX(-50%);
+    width: 80%; /* Fixed width of the health bar container */
+    max-width: 500px; /* Max width */
     height: 20px; /* Height of the bar */
     background-color: rgba(0, 0, 0, 0.3); /* Background of the bar */
     border-radius: 5px;
 }
 
+/* Health bar width changes based on percentage of health */
 .enemyHealthBar {
     height: 100%;
     background-color: red; /* Color of the health bar */
     border-radius: 5px;
+    transition: width 0.5s ease; /* Smooth transition when health changes */
 }
 
+/* Health text centered inside the bar */
 .enemyHealthText {
     position: absolute;
     top: 50%;
@@ -58,129 +58,336 @@
     transform: translate(-50%, -50%);
     color: white;
     font-weight: bold;
-}
-
-
-.battleoptions {
-    width: 92.6%;   
-    height: 40%; /* Adjust height for layout */
-    display: flex;
-}
-.playermoves{
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.logs{
-    background-color: #1e1e1e;
-    width: 50%;
-    height: 100%;
-    border: 15px solid #986e22;
-}
-.playeroptions{
-    background-color: #4b340a;
-    width: 100%;
-    height: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-.playerButtons{
-    width: 40%;
-    margin: 10px;
-    height: 40px;
-    background-color: #aa8348;
-    font-size: 21px;
-}
-
-.playerstats{
-    width: 100%;
-    height: 50%;
-    display: flex;
-}
-.avatarpic{
-    background-color: #3c311d;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.avatarstats {
-    background-color: #716d64;
-    width: 70%;
-    height: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-.healthBarContainer {
-    margin-top: 10px;
-    width: 100%;
-    height: 20px; /* Adjust the height of the health bar */
-    background-color: #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    position: relative; /* Needed for positioning the text inside */
-}
-
-.healthBar {
-    height: 100%;
-    background-color: #ff4c4c; /* Red color for health bar */
-    border-radius: 5px;
-    transition: width 0.5s ease; /* Smooth transition when health changes */
-    position: relative;
-}
-
-.healthText {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    color: black;
-    font-weight: bold;
-    line-height: 20px; /* Vertically center the text */
     font-size: 14px;
 }
 
-.avatarimg{
-    width: 80%;
-    background-color: #5f5b50;
+
+    .battleoptions {
+        width: 92.6%;   
+        height: 40%; /* Adjust height for layout */
+        display: flex;
+    }
+    .playermoves{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .logs{
+        background-color: #1e1e1e;
+        width: 50%;
+        height: 100%;
+        border: 15px solid #986e22;
+        color: white;
+        padding : 10px
+    }
+    .playeroptions{
+        background-color: #4b340a;
+        width: 100%;
+        height: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .playerButtons{
+        width: 40%;
+        margin: 10px;
+        height: 40px;
+        background-color: #aa8348;
+        font-size: 16px;
+        white-space: normal; /* Allow text to wrap to the next line */
+        word-wrap: break-word;
+    }
+
+    .playerstats{
+        width: 100%;
+        height: 50%;
+        display: flex;
+    }
+    .avatarpic{
+        background-color: #3c311d;
+        width: 30%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .avatarstats {
+        background-color: #716d64;
+        width: 70%;
+        height: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .healthBarContainer {
+        margin-top: 10px;
+        width: 100%;
+        height: 25px; /* Adjust the height of the health bar */
+        background-color: #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        position: relative; /* Needed for positioning the text inside */
+    }
+
+    .healthBar {
+        height: 100%;
+        background-color: #ff4c4c; /* Red color for health bar */
+        border-radius: 5px;
+        transition: width 0.5s ease; /* Smooth transition when health changes */
+        position: relative;
+    }
+
+    .healthText {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-weight: bold;
+        line-height: 20px; /* Vertically center the text */
+        font-size: 14px;
+    }
+
+    .avatarimg{
+        width: 80%;
+        background-color: #5f5b50;
+    }
+    .imgcon{
+        margin: auto;
+        width: 70%;
+        height: 80%;
+        margin-top: 15px;
+        border: 3px solid white;
+        padding:10px;
+        padding-left: 25px; 
+        cursor: pointer;
+    }
+    .playerButtons:hover {
+        background-color: #8c7039;
+        transform: scale(1.05); /* Button grows slightly on hover */
+    }
+    .status{
+        margin: auto;
+        background-color: white;
+        width: 70%;
+        height: 30px;
+        color: green;
+        text-align: center;
+        padding-top: 5px;
+        margin-top: 10px;
+        border: 1px solid black;
+        border-radius: 20px;
+    }
+    .stattexts{
+        font-size: 12px;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+.enemyname{
+    position: absolute;
+    left: 44%
 }
-.imgcon{
-    margin: auto;
-    width: 70%;
-    height: 80%;
-    margin-top: 15px;
-    border: 3px solid white;
-    padding:10px;
-    padding-left: 25px; 
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modalContent p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modalActions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modalActions button:hover {
+    background-color: #0056b3;
+}
+
+.modalActions button:last-child {
+    background-color: #dc3545;
+}
+
+.modalActions button:last-child:hover {
+    background-color: #a71d2a;
+}
+/* InventoryModal.module.css */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bagtxt {
+    margin-bottom: 20px;
+  }
+  
+  .itemList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #dddddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .itemImage {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .itemDetails {
+    text-align: left;
+  }
+  
+  .itemName {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+  .closeButton {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .closeButton:hover {
+    background-color: #ff4b4b;
+  }
+  .useButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    width: 100px;
+  }
+  
+  .useButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+ /* Quiz Modal */
+.actionmodal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: black;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actioncontent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+}
+
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.radioGroup label {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.submitbtn {
+    background-color: #4caf50;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
 }
-.playerButtons:hover {
-    background-color: #8c7039;
-    transform: scale(1.05); /* Button grows slightly on hover */
+
+.submitbtn:hover {
+    background-color: #45a049;
 }
-.status{
-    margin: auto;
-    background-color: white;
-    width: 70%;
-    height: 30px;
-    color: green;
+
+.quizFeedback {
+    font-size: 18px;
     text-align: center;
-    padding-top: 5px;
-    margin-top: 10px;
-    border: 1px solid black;
-    border-radius: 20px;
-}
-.stattexts{
-    font-size: 12px;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    margin-top: 20px;
 }
