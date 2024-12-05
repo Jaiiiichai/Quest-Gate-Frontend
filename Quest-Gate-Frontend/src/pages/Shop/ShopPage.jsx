@@ -101,7 +101,7 @@ function ShopPage() {
       </div>
 
       {selectedItem && (
-        <div className={styles.itemsec}>
+        <div className={`${styles.itemsec} w3-animate-zoom`}>
           <div className={styles.details}>
             <div className={styles.selectedItem}>
               <img

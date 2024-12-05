@@ -10,7 +10,7 @@ const InventoryModal = ({ avatarId, onClose, isButtonDisabled , onUseItem}) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/getItems');
+        const response = await axios.get(`http://localhost:3000/api/getItems/${avatarId}`);
         setItems(response.data); // Store items in state
       } catch (error) {
         console.error("Error fetching items:", error);

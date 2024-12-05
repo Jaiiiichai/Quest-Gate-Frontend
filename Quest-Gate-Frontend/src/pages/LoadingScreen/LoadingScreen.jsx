@@ -2,24 +2,28 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './LoadingScreen.module.css';
 import running from '../../assets/Knightgif/__Run.gif';
+import background from '../../assets/Level/loadingbg.jpg'
 
 function LoadingScreen() {
   const navigate = useNavigate();
   const location = useLocation();
-  const targetRoute = location.state?.targetRoute || '/'; // Default route to go to if none is passed
+  const { targetRoute, ...data } = location.state || {}; // Extract additional data from state
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate(targetRoute); // Navigate to the target route after the delay
-    }, 2000); // Delay of 2 seconds for loading
+      if (targetRoute) {
+        navigate(targetRoute, { state: data }); // Pass additional data to the next route
+      }
+    }, 4000);
 
-    return () => clearTimeout(timer); // Clean up timer when component is unmounted
-  }, [navigate, targetRoute]);
+    return () => clearTimeout(timer);
+  }, [navigate, targetRoute, data]);
 
   return (
     <div className={styles.loadingContainer}>
       <img src={running} alt="running" className={styles.running} />
-      <p className={styles.loadingTxt}>Loading...</p>
+      <img src={background} alt="running" className={styles.loadingBackground} />
+      <p className={styles.loadingTxt} style={{ fontSize: '50px' }}>Loading...</p>
     </div>
   );
 }

@@ -28,13 +28,20 @@ function BattlePage() {
     const maxHealth = 100;
     const bgImage = map || '../../assets/Battle/default_bg.png';
     const enemyimg = enemy;
-    const [actionModal, setActionModal] = useState(false);
     const [quiz, setQuiz] = useState([])
     const [, setSelectedAnswers] = useState({});
     const [isQuizModalVisible, setIsQuizModalVisible] = useState(false);
     const [, setFeedbackData] = useState({ feedback: '', isCorrect: true });
     const [, setQuizResult] = useState(null); 
     const [currentAction ,setCurrentAction] = useState()
+    const [itemUsed, setItemUsed] = useState();
+    const [bossSkill, setBossSkill] = useState(null);
+    const [isBoss, setIsBoss] = useState(false)
+    const [status, setStatus] = useState('')
+    const [isPoisoned, setIsPoisoned] = useState(false)
+    const [isGameOver, setIsGameOver] = useState(false);
+    const [gameResult, setGameResult] = useState('');
+    const [showBattleStartModal, setShowBattleStartModal] = useState(true);
 
 
     useEffect(() => {
@@ -51,15 +58,36 @@ function BattlePage() {
         if (avatarId) getAvatarData();
         console.log(category)
     }, [avatarId]);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowBattleStartModal(false);
+        }, 3000); // Close the modal after 3 seconds
+    
+        return () => clearTimeout(timer); // Cleanup the timer on unmount
+    }, []);
 
     useEffect(() => {
         const fetchGrunt = async () => {
-            const response = await axios.get(`http://localhost:3000/api/getGrunt/${grunt_id}`);
-            setMaxEnemyHealth(response.data.health);
-            setEnemyHealth(response.data.health);
-            setEnemyname(response.data.name);
-            setEnemyAttack(response.data.attack);
-            setEnemyDefense(response.data.defense);
+            console.log(grunt_id.boss_id)
+            if(grunt_id.grunt_id != null){
+                const response = await axios.get(`http://localhost:3000/api/getGrunt/${grunt_id.grunt_id}`);
+                setMaxEnemyHealth(response.data.health);
+                setEnemyHealth(response.data.health);
+                setEnemyname(response.data.name);
+                setEnemyAttack(response.data.attack);
+                setEnemyDefense(response.data.defense);
+            }else{
+                const response = await axios.get(`http://localhost:3000/api/getBoss/${grunt_id.boss_id}`);
+                setMaxEnemyHealth(response.data.health);
+                setEnemyHealth(response.data.health);
+                setEnemyname(response.data.name);
+                setEnemyAttack(response.data.attack);
+                setEnemyDefense(response.data.defense);
+                setBossSkill(response.data.Skill)
+                setIsBoss(true)
+          
+            }
+           
         };
 
         fetchGrunt();
@@ -93,27 +121,23 @@ function BattlePage() {
 
     const updateHealth = (amount, isPlayer = true) => {
         if (isPlayer) {
-            setHealth((prevHealth) => Math.min(Math.max(prevHealth + amount, 0), maxHealth));
+            const newHealth = Math.min(Math.max(health + amount, 0), maxHealth);
+            setHealth(newHealth);
+            if (newHealth === 0) {
+                setGameResult('lose');
+                setIsGameOver(true);
+            }
         } else {
-            setEnemyHealth((prevHealth) =>
-                Math.min(Math.max(prevHealth + amount, 0), maxEnemyHealth)
-            );
+            const newEnemyHealth = Math.min(Math.max(enemyHealth + amount, 0), maxEnemyHealth);
+            setEnemyHealth(newEnemyHealth);
+            if (newEnemyHealth === 0) {
+                setGameResult('win');
+                setIsGameOver(true);
+            }
         }
     };
     const handleAnswerResult = (isCorrect) => {
-        setQuizResult(isCorrect); // Update the quiz result state
-        // if (isCorrect) {
-        //     const playerMultiplier = getRandomMultiplier(0.7, 1);
-        //     const playerDamage = avatarData.attack * playerMultiplier;
-        //     const playerDamageAfterDefense = playerDamage * (1 - enemyDefense / (enemyDefense + 100));
-        //     const finalPlayerDamage = Math.ceil(playerDamageAfterDefense);
-        //     updateHealth(-finalPlayerDamage, false);
-        //     addLog('Answer is correct')
-        //     addLog(`Player dealt ${finalPlayerDamage} damage to the enemy.`);
-
-        // } else {
-        //     addLog('Answer incorrect!! Player attack missed!');
-        // }
+        setQuizResult(isCorrect); 
 
         if (currentAction === 'attack') {
             const playerMultiplier = getRandomMultiplier(0.7, 1);
@@ -134,6 +158,7 @@ function BattlePage() {
     const getRandomMultiplier = (min = 0.85, max = 1.15) => Math.random() * (max - min) + min;
 
     const handlePlayerAction = (action) => {
+
         if (!isPlayerTurn) return;
     
         switch (action) {
@@ -149,48 +174,99 @@ function BattlePage() {
                 setCurrentAction('defend'); // Set current action context
                 break;
             }
-            case 'item': {
-                setTimeout(() => {
+            case 'item': 
+            setShowInventoryModal(true);
+                if(itemUsed){
                     addLog('Player used Item!');
                     setShowInventoryModal(true); // Open inventory modal
-                    setActionModal(false); // Hide action modal
-                    enemyAction(); // Trigger enemy's turn
-                }, 1500);
+
+                }else{
+                    setIsPlayerTurn(true)
+                }
+                    
                 break;
-            }
+            
             case 'flee': {
                 setShowModal(true); // Show flee confirmation modal
                 break;
             }
             default:
+                setIsPlayerTurn(false); // End player's turn
                 break;
         }
     
-        setIsPlayerTurn(false); // End player's turn
     };
     
     const enemyAction = () => {
+        
         setTimeout(() => {
             let finalEnemyDamage;
-
+            console.log(bossSkill)
             if (isDefendingRef.current) {
                 finalEnemyDamage = 3;
                 addLog('Enemy attack was reduced to 3 due to defense!');
-            } else {
+                setIsPlayerTurn(true);
+            }
+            else if(isBoss){
                 const enemyMultiplier = getRandomMultiplier(0.6, 1);
                 const enemyDamage = enemyAttack * enemyMultiplier;
                 const enemyDamageAfterDefense =
                     enemyDamage * (1 - avatarData.defense / (avatarData.defense + 100));
                 finalEnemyDamage = Math.ceil(enemyDamageAfterDefense);
                 addLog(`Enemy attack dealt ${finalEnemyDamage}`);
+               if(Math.random()< 0.30){
+                    if(bossSkill === "Stun"){
+                        addLog("Boss used a skill stun. Stunned for 1 turn")
+                        addLog('Player turn skipped')
+                        setIsPlayerTurn(false)
+                        setTimeout(() =>{
+                            enemyAction();
+                        },2000)
+                        
+                    }
+                    if(bossSkill ==="Drain"){
+                        addLog("Boss used a skill Drain")
+                      
+                        setTimeout(() =>{
+                            setEnemyHealth(enemyHealth+finalEnemyDamage)
+                            addLog("Damage will be converted to health")
+                        },2000)
+                    }
+                    if(bossSkill ==="Poison"){
+                        addLog("Boss used a skill Toxic")
+                        addLog("You are now poisoned")
+                        setStatus("You are poisoned")
+                        setIsPoisoned(true)
+                    }
+               }
+               setIsPlayerTurn(true);
+            }else{
+                const enemyMultiplier = getRandomMultiplier(0.6, 1);
+                const enemyDamage = enemyAttack * enemyMultiplier;
+                const enemyDamageAfterDefense =
+                    enemyDamage * (1 - avatarData.defense / (avatarData.defense + 100));
+                finalEnemyDamage = Math.ceil(enemyDamageAfterDefense);
+                addLog(`Enemy attack dealt ${finalEnemyDamage}`);
+                setIsPlayerTurn(true);
             }
             updateHealth(-finalEnemyDamage);
+            if (health <= 0) {
+                setGameResult('lose');
+                setIsGameOver(true);
+            }
             isDefendingRef.current = false;
-            setIsPlayerTurn(true);
+            setTimeout(()=>{
+                if(isPoisoned){
+                    updateHealth(-20)
+                    addLog('Took damage from poison')
+                }
+            },2000)
+            
         }, 1000);
     };
     const handleUseItem = async (itemId) => {
         console.log(`Used item ID: ${itemId}`);
+        setItemUsed(true)
       
         try {
           // Special logic for specific items
@@ -225,6 +301,9 @@ function BattlePage() {
           console.error('Error using item:', error);
 
         }
+                           
+        setIsPlayerTurn(false)
+        enemyAction(); // Trigger enemy's turn
     };
     const handleAnswerSelected = (quizId, selectedChoice) => {
         setSelectedAnswers((prevAnswers) => ({
@@ -300,7 +379,7 @@ function BattlePage() {
                                 <p className={styles.stattexts}>Attack: {avatarData ? avatarData.attack : 0}</p>
                                 <p className={styles.stattexts}>Defense: {avatarData ? avatarData.defense : 0}</p>
 
-                                <div className={styles.status}>You are poisoned!</div>
+                                <div className={styles.status}>{status}</div>
                             </div>
                         </div>
                         <div className={styles.playeroptions}>
@@ -346,10 +425,11 @@ function BattlePage() {
                 <InventoryModal avatarId={avatarId} onClose={() => setShowInventoryModal(false)} onUseItem={handleUseItem} />
 
         )}
-        {actionModal && (
+        {showBattleStartModal && (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
-                    <p> {quiz.question}</p>
+                    <h2>Battle Start!</h2>
+                    <p>Prepare for the fight!</p>
                 </div>
             </div>
         )}
@@ -374,6 +454,19 @@ function BattlePage() {
                     </div>
                 </div>
             )}
+            {isGameOver && (
+            <div className={styles.modal}>
+                        <div className={styles.modalContent}>
+                            <h2>{gameResult === 'win' ? 'You Win!' : 'You Lose!'}</h2>
+                             <p>{gameResult === 'win' ? 'Congratulations! You defeated the enemy!' : 'Better luck next time!'}</p>
+                            <button onClick={() => {
+                                setIsGameOver(false);
+                                // Optionally, redirect or reset the game state here
+                            }}>Close</button>
+                        </div>
+                    </div>
+                )}
+ 
         </div>
     );
 }
