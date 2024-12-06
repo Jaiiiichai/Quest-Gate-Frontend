@@ -5,6 +5,7 @@ import knight from '../../assets/Battle/knight_idle.gif';
 import { useLocation,Link } from 'react-router-dom';
 import { useAvatar } from '../../hooks/AvatarContext';
 import InventoryModal from '../Town/InventoryModal'; 
+import battleStart from '../../assets/Battle/Battle-removebg-preview.png'
 import QuizModal from './QuizModal'
 import axios from 'axios';
 
@@ -32,7 +33,6 @@ function BattlePage() {
     const [, setSelectedAnswers] = useState({});
     const [isQuizModalVisible, setIsQuizModalVisible] = useState(false);
     const [, setFeedbackData] = useState({ feedback: '', isCorrect: true });
-    const [, setQuizResult] = useState(null); 
     const [currentAction ,setCurrentAction] = useState()
     const [itemUsed, setItemUsed] = useState();
     const [bossSkill, setBossSkill] = useState(null);
@@ -56,7 +56,8 @@ function BattlePage() {
             }
         };
         if (avatarId) getAvatarData();
-        console.log(category)
+        console.log("Location state:", location.state);
+        console.log("Grunt ID:", grunt_id);
     }, [avatarId]);
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -68,25 +69,44 @@ function BattlePage() {
 
     useEffect(() => {
         const fetchGrunt = async () => {
-            console.log(grunt_id.boss_id)
-            if(grunt_id.grunt_id != null){
-                const response = await axios.get(`http://localhost:3000/api/getGrunt/${grunt_id.grunt_id}`);
-                setMaxEnemyHealth(response.data.health);
-                setEnemyHealth(response.data.health);
-                setEnemyname(response.data.name);
-                setEnemyAttack(response.data.attack);
-                setEnemyDefense(response.data.defense);
-            }else{
-                const response = await axios.get(`http://localhost:3000/api/getBoss/${grunt_id.boss_id}`);
-                setMaxEnemyHealth(response.data.health);
-                setEnemyHealth(response.data.health);
-                setEnemyname(response.data.name);
-                setEnemyAttack(response.data.attack);
-                setEnemyDefense(response.data.defense);
-                setBossSkill(response.data.Skill)
-                setIsBoss(true)
-          
+            console.log("Boss_id: ",grunt_id.boss_id)
+            try{
+                if (typeof grunt_id === 'object' && grunt_id !== null) {
+                    
+                    if(grunt_id.grunt_id != null){
+                        const response = await axios.get(`http://localhost:3000/api/getGrunt/${grunt_id.grunt_id}`);
+                        console.log(response.data)
+                        setMaxEnemyHealth(response.data.health);
+                        setEnemyHealth(response.data.health);
+                        setEnemyname(response.data.name);
+                        setEnemyAttack(response.data.attack);
+                        setEnemyDefense(response.data.defense);
+                    }else{
+                        const response = await axios.get(`http://localhost:3000/api/getBoss/${grunt_id.boss_id}`);
+                        setMaxEnemyHealth(response.data.health);
+                        setEnemyHealth(response.data.health);
+                        setEnemyname(response.data.name);
+                        setEnemyAttack(response.data.attack);
+                        setEnemyDefense(response.data.defense);
+                        setBossSkill(response.data.Skill)
+                        setIsBoss(true)
+                  
+                    }
+                } else {
+                    const response = await axios.get(`http://localhost:3000/api/getGrunt/${grunt_id}`);
+                        console.log(response.data)
+                        setMaxEnemyHealth(response.data.health);
+                        setEnemyHealth(response.data.health);
+                        setEnemyname(response.data.name);
+                        setEnemyAttack(response.data.attack);
+                        setEnemyDefense(response.data.defense);
+                }
+
+                
+            }catch(err){
+                console.log(err)
             }
+            
            
         };
 
@@ -136,24 +156,31 @@ function BattlePage() {
             }
         }
     };
-    const handleAnswerResult = (isCorrect) => {
-        setQuizResult(isCorrect); 
-
-        if (currentAction === 'attack') {
-            const playerMultiplier = getRandomMultiplier(0.7, 1);
-            const playerDamage = avatarData.attack * playerMultiplier;
-            const playerDamageAfterDefense = playerDamage * (1 - enemyDefense / (enemyDefense + 100));
-            const finalPlayerDamage = Math.ceil(playerDamageAfterDefense);
-            updateHealth(-finalPlayerDamage, false);
-            addLog('Answer is correct')
-            addLog(`Player dealt ${finalPlayerDamage} damage to the enemy.`);
-        } else if (currentAction === 'defend') {
-            addLog(isCorrect ? 'Player successfully defended!' : 'Defense failed!');
-            isDefendingRef.current = isCorrect; // Set defending status
+    const handleAnswerResult = (isCorrect) => { 
+        console.log('battle page quiz result ',isCorrect)
+        if(isCorrect){
+            if (currentAction === 'attack') {
+                const playerMultiplier = getRandomMultiplier(0.7, 1);
+                const playerDamage = avatarData.attack * playerMultiplier;
+                const playerDamageAfterDefense = playerDamage * (1 - enemyDefense / (enemyDefense + 100));
+                const finalPlayerDamage = Math.ceil(playerDamageAfterDefense);
+                updateHealth(-finalPlayerDamage, false);
+                addLog(`Player dealt ${finalPlayerDamage} damage to the enemy.`);
+                addLog('Attack successful')
+            } else if (currentAction === 'defend') {
+                addLog(isCorrect ? 'Player successfully defended!' : 'Defense failed!');
+                isDefendingRef.current = isCorrect; // Set defending status
+            }
+        }else{
+            addLog('Answer incorrect!!')
+            addLog('Attack unsuccessful')
+            setIsQuizModalVisible(false); // Close quiz modal
+            enemyAction(); // Proceed with enemy action
         }
-        setIsQuizModalVisible(false); // Close quiz modal
-        enemyAction(); // Proceed with enemy action
+
+        
     };
+
 
     const getRandomMultiplier = (min = 0.85, max = 1.15) => Math.random() * (max - min) + min;
 
@@ -427,9 +454,8 @@ function BattlePage() {
         )}
         {showBattleStartModal && (
             <div className={styles.modal}>
-                <div className={styles.modalContent}>
-                    <h2>Battle Start!</h2>
-                    <p>Prepare for the fight!</p>
+                <div className={styles.startmodalContent}>
+                <img src={battleStart} alt="player" className={styles.battleStart}/>
                 </div>
             </div>
         )}

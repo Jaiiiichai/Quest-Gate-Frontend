@@ -8,19 +8,30 @@ const QuizModal = ({ quiz, onAnswerSelected, onClose, onFeedback, onAnswerResult
 
     const handleAnswerSelection = (selectedChoice) => {
         const isAnswerCorrect = selectedChoice === quiz.correct_answer;
+    
+        // Prepare feedback text
         const feedbackText = isAnswerCorrect 
             ? 'Correct!' 
             : `Incorrect! The correct answer is: ${quiz.correct_answer}`;
-
+    
         // Update local state
         setIsCorrect(isAnswerCorrect);
         setFeedback(feedbackText);
-
+    
         // Pass feedback and result
         onFeedback(feedbackText, isAnswerCorrect);
         onAnswerSelected(quiz.quiz_id, selectedChoice);
+        
+        // Call onAnswerResult with the current answer correctness
         onAnswerResult(isAnswerCorrect); // Pass true/false back to the parent
-            onClose();
+
+        console.log('Selected Choice:', selectedChoice);
+        console.log('Correct Answer:', quiz.correct_answer);
+        console.log('Is Answer Correct:', isAnswerCorrect);
+    
+        // Close the modal after processing the answer
+        onClose();
+
     };
 
     return (
