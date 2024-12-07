@@ -25,7 +25,7 @@ function QuizPage() {
       const requestData = {
         lesson_id: lessonId,   // Send the lesson_id in the body of the POST request
         quest_id: null,         // Assuming quest_id and battle_id are null
-        battle_id: null
+        level_id: null
       };
 
       axios.post('http://localhost:3000/api/getReward', requestData)
@@ -61,81 +61,94 @@ function QuizPage() {
   };
 
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     let correctAnswersCount = 0;
-  
+
     // Calculate score
     quizzes.forEach(quiz => {
-      if (selectedAnswers[quiz.quiz_id] === quiz.correct_answer) {
-        correctAnswersCount++;
-      }
+        if (selectedAnswers[quiz.quiz_id] === quiz.correct_answer) {
+            correctAnswersCount++;
+        }
     });
-  
+
     setScore(correctAnswersCount);
+    let progressClaimed;
 
-
+    try {
         const response = await axios.post('http://localhost:3000/api/checkProgress', {
-          avatarId: avatarId,
-          lesson_id: lessonId,
-        })
-        
-        const progressClaimed = response.data.claimed;
-        
-        
-        console.log(progressClaimed)
-    let finalReward = reward;
-  
-    if(progressClaimed == true){
-      finalReward = {
-        coins: 0,
-        exp: 5,  
-        claimed: true, 
-      };
-    }else if (correctAnswersCount !== quizzes.length) {
-      finalReward = {
-        coins: 0,
-        exp: 5,  
-        claimed: false, 
-      };
-    }
-  
- 
-  const modalContent = {
-    lessonId: lessonId,
-    score: correctAnswersCount,
-    totalQuestions: quizzes.length,
-    reward: finalReward,
-  };
+            avatarId: avatarId,
+            lesson_id: lessonId,
+        });
 
-  // Set modal data and show the modal
-  setModalData(modalContent);
-  setShowModal(true);
+        progressClaimed = response.data.claimed;
+        console.log("Progress claimed:", progressClaimed);
+    } catch (err) {
+        console.log(err);
+        progressClaimed = false; // Default to false if there's an error
+    }
+
+    let finalReward = reward;
+
+    // Determine if the reward can be claimed
+    if (correctAnswersCount === quizzes.length && !progressClaimed) {
+        // Perfect score and not claimed yet
+        finalReward = {
+            coins: 10, // Example reward
+            exp: 10,   // Example reward
+            claimed: true,
+        };
+    } else if (correctAnswersCount !== quizzes.length) {
+        // Not all answers are correct
+        finalReward = {
+            coins: 0,
+            exp: 5,
+            claimed: false,
+        };
+    } else {
+        // If already claimed
+        finalReward = {
+            coins: 0,
+            exp: 5,
+            claimed: true,
+        };
+    }
+
+    const modalContent = {
+        lessonId: lessonId,
+        score: correctAnswersCount,
+        totalQuestions: quizzes.length,
+        reward: finalReward,
+    };
+
+    // Set modal data and show the modal
+    setModalData(modalContent);
+    setShowModal(true);
 };
 
   // Close modal
-  const closeModal = async(coins,exp,reward_id,claimed) => {
+  const closeModal = async (coins, exp, reward_id, claimed) => {
     setShowModal(false);
-    try{
-      await axios.put('http://localhost:3000/api/updateAvatarRewards', {
-      avatarId: avatarId,  // Avatar ID
-      coins: coins,
-      exp: exp   // New coins value
-    });
-  }catch(err){
-    console.log(err)
-  }
+    try {
+        await axios.put('http://localhost:3000/api/updateAvatarRewards', {
+            avatarId: avatarId,
+            coins: coins,
+            exp: exp,
+        });
+    } catch (err) {
+        console.log(err);
+    }
 
     const progressData = {
-      avatarId: avatarId,
-      level_id: null,
-      lesson_id: lessonId,
-      reward_id: reward_id,
-      completed: false,
-      claimed : claimed
-    }
-    await axios.post('http://localhost:3000/api/update-progress',progressData)
-
-  };
+        avatarId: avatarId,
+        level_id: null,
+        lesson_id: lessonId,
+        reward_id: reward_id,
+        completed: true, // Mark as completed
+        claimed: claimed, // Pass the claimed status
+    };
+    console.log("Is it claimed:", claimed);
+    await axios.post('http://localhost:3000/api/update-progress', progressData);
+};
 
   return (
     <div className={styles.container}>

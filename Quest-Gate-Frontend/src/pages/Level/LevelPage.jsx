@@ -52,6 +52,7 @@ function LevelPage() {
                     level4: response4.data,
                    level5: response5.data
                 });
+                console.log("level 1" ,response1.data)
     
                // console.log("gruntIds:", response1.data.grunt_id, response2.data.grunt_id, response3.data.grunt_id, response4.data.grunt_id);
             } catch (error) {
@@ -76,24 +77,24 @@ function LevelPage() {
                 </div>
             </Link>
 
-            <Link to="/loading" state={{targetRoute:'/battle', map: map, grunt_id: gruntIds.level2, enemy: enemy.goblin,category: category  }}>
+            <Link to="/loading" state={{targetRoute:'/battle', map: map, grunt_id: gruntIds.level2, enemy: enemy.goblin,category: category }}>
                 <div className={`${styles.levelselect} ${styles.level2}`}>
                     <h3>2</h3>
                 </div>
             </Link>
 
-            <Link to="/loading" state={{targetRoute:'/battle', map: map, grunt_id: gruntIds.level3, enemy: enemy.bat, category: category  }}>
+            <Link to="/loading" state={{targetRoute:'/battle', map: map, grunt_id: gruntIds.level3, enemy: enemy.bat, category: category }}>
                 <div className={`${styles.levelselect} ${styles.level3}`}>
                     <h3>3</h3>
                 </div>
             </Link>
 
-            <Link to="/loading" state={{ targetRoute:'/battle',map: map, grunt_id: gruntIds.level4, enemy: enemy.mushroom,category: category  }}>
+            <Link to="/loading" state={{ targetRoute:'/battle',map: map, grunt_id: gruntIds.level4, enemy: enemy.mushroom,category: category }}>
                 <div className={`${styles.levelselect} ${styles.level4}`}>
                     <h3>4</h3>
                 </div>
             </Link>
-            <Link to="/loading" state={{targetRoute: '/battle', map: map, grunt_id: gruntIds.level5, enemy: enemy.bossImg,category: category  }}>
+            <Link to="/loading" state={{targetRoute: '/battle', map: map, grunt_id: gruntIds.level5, enemy: enemy.bossImg,category: category }}>
                 <div className={`${styles.levelselect} ${styles.level5}`}>
                     <h3>5</h3>
                 </div>
