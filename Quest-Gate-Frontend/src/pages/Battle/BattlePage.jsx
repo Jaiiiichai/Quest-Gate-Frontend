@@ -2,7 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import styles from '../Battle/BattlePage.module.css';
 import avatar from '../../assets/Town/Profile view main Character.png';
 import knight from '../../assets/Battle/knight_idle.gif';
-import { useLocation, Link } from 'react-router-dom';
+import knightAttack from '../../assets/Knightgif/knight_attack.gif'
+import attack_slash from '../../assets/Knightgif/attack_slash.gif'
+import { useLocation, Link , useNavigate} from 'react-router-dom';
 import { useAvatar } from '../../hooks/AvatarContext';
 import InventoryModal from '../Town/InventoryModal'; 
 import battleStart from '../../assets/Battle/Battle-removebg-preview.png';
@@ -10,6 +12,7 @@ import QuizModal from './QuizModal';
 import axios from 'axios';
 
 function BattlePage() {
+    const navigate = useNavigate();
     const location = useLocation();
     const { avatarId } = useAvatar();
     const { map, enemy, grunt_id, category } = location.state || {};
@@ -43,6 +46,11 @@ function BattlePage() {
     const [gameResult, setGameResult] = useState('');
     const [showBattleStartModal, setShowBattleStartModal] = useState(true);
     const [rewardData, setRewardData] = useState(null);
+    const [isAttacking, setIsAttacking] = useState(false);
+    const [isEnemyAttacked, setIsEnemyAttacked] = useState(false);
+    const [isPlayerAttacked, setIsPlayerAttacked] = useState(false);
+    const [isPlayerShaking, setIsPlayerShaking] = useState(false);
+    const [isEnemyAttacking, setIsEnemyAttacking] = useState(false);
 
     useEffect(() => {
         const getAvatarData = async () => {
@@ -158,14 +166,26 @@ function BattlePage() {
     }, [gameResult, isGameOver]);
     
     const fetchRewardData = async () => {
-        const getlevelId = {
-            "quest_id": null,
-            "lesson_id": null,
-            "level_id": grunt_id.level_id
-        };
-        
-        
-        console.log(gameResult)
+        console.log("fetched grunt_id: ", grunt_id);
+    
+        let getlevelId; // Corrected variable name
+    
+        // Determine the level ID based on the grunt_id
+        if (grunt_id === 8 || grunt_id === 7) {
+            getlevelId = {
+                "quest_id": 1,
+                "lesson_id": null,
+                "level_id": null
+            };
+        } else {
+            getlevelId = {
+                "quest_id": null,
+                "lesson_id": null,
+                "level_id": grunt_id.level_id
+            };
+        }
+    
+        console.log("Game Result:", gameResult); // Log the game result
         try {
             // If the game result is a loss, set fixed rewards
             if (gameResult === 'lose') {
@@ -179,11 +199,41 @@ function BattlePage() {
                 // Fetch rewards from the API if the player wins
                 const response = await axios.post(`http://localhost:3000/api/getReward`, getlevelId);
                 setRewardData(response.data); // Set the reward data
-                console.log(response.data);
-                console.log('Player won. Fixed rewards: 5 coins, 5 exp');
+                console.log('Player won. Rewards:', response.data);
             }
         } catch (error) {
             console.error('Error fetching reward data:', error);
+        }
+    };
+
+    const closeModal = async (coins, exp, reward_id, claimed) => {
+        setShowModal(false); // Close the modal
+        try {
+            // Update avatar rewards
+            await axios.put('http://localhost:3000/api/updateAvatarRewards', {
+                avatarId: avatarId,
+                coins: coins,
+                exp: exp,
+            });
+            console.log('Avatar rewards updated successfully');
+        } catch (err) {
+            console.error('Error updating avatar rewards:', err);
+        }
+
+        const progressData = {
+            avatarId: avatarId,
+            level_id: 1, // Set this if you have a specific level ID
+            lesson_id: null, // Ensure lessonId is set correctly
+            reward_id: reward_id,
+            completed: true, // Mark as completed
+            claimed: claimed, // Pass the claimed status
+        };
+        console.log("Is it claimed:", claimed);
+        try {
+            await axios.post('http://localhost:3000/api/update-progress', progressData);
+            console.log('Progress updated successfully');
+        } catch (err) {
+            console.error('Error updating progress:', err);
         }
     };
 
@@ -191,6 +241,8 @@ function BattlePage() {
         console.log('battle page quiz result ', isCorrect);
         if (isCorrect) {
             if (currentAction === 'attack') {
+                setIsAttacking(true)
+                setIsEnemyAttacked(true);
                 const playerMultiplier = getRandomMultiplier(0.7, 1);
                 const playerDamage = avatarData.attack * playerMultiplier;
                 const playerDamageAfterDefense = playerDamage * (1 - enemyDefense / (enemyDefense + 100));
@@ -198,13 +250,16 @@ function BattlePage() {
                 updateHealth(-finalPlayerDamage, false);
                 addLog(`Player dealt ${finalPlayerDamage} damage to the enemy.`);
                 addLog('Attack successful');
+                setTimeout(() => {
+                    setIsAttacking(false); // Reset attacking state
+                    setIsEnemyAttacked(false);
+                }, 600);
             } else if (currentAction === 'defend') {
                 addLog(isCorrect ? 'Player successfully defended!' : 'Defense failed!');
                 isDefendingRef.current = isCorrect; // Set defending status
             }
         } else {
             addLog('Answer incorrect!!');
-            addLog('Attack unsuccessful');
             setIsQuizModalVisible(false); // Close quiz modal
             enemyAction(); // Proceed with enemy action
         }
@@ -217,9 +272,12 @@ function BattlePage() {
 
         switch (action) {
             case 'attack': {
+      
                 getQuiz(); // Fetch quiz for attack
                 setIsQuizModalVisible(true); // Show quiz modal
                 setCurrentAction('attack'); // Set current action context
+
+              
                 break;
             }
             case 'defend': {
@@ -263,27 +321,7 @@ function BattlePage() {
                 finalEnemyDamage = Math.ceil(enemyDamageAfterDefense);
                 addLog(`Enemy attack dealt ${finalEnemyDamage}`);
                 if (Math.random() < 0.40) {
-                    if (bossSkill === "Stun") {
-                        addLog("Boss used a skill stun. Stunned for 1 turn");
-                        addLog('Player turn skipped');
-                        setIsPlayerTurn(false);
-                        setTimeout(() => {
-                            enemyAction();
-                        }, 2000);
-                    }
-                    if (bossSkill === "Drain") {
-                        addLog("Boss used a skill Drain");
-                        setTimeout(() => {
-                            setEnemyHealth(enemyHealth + finalEnemyDamage);
-                            addLog("Damage will be converted to health");
-                        }, 2000);
-                    }
-                    if (bossSkill === "Poison") {
-                        addLog("Boss used a skill Toxic");
-                        addLog("You are now poisoned");
-                        setStatus("You are poisoned");
-                        setIsPoisoned(true);
-                    }
+                    // Boss skills logic...
                 }
                 setIsPlayerTurn(true);
             } else {
@@ -293,12 +331,25 @@ function BattlePage() {
                     enemyDamage * (1 - avatarData.defense / (avatarData.defense + 100));
                 finalEnemyDamage = Math.ceil(enemyDamageAfterDefense);
                 addLog(`Enemy attack dealt ${finalEnemyDamage}`);
-                setIsPlayerTurn(true) }
+                setIsPlayerTurn(true);
+            }
+    
+            // Update health and trigger player effects
             updateHealth(-finalEnemyDamage);
+            setIsPlayerAttacked(true); // Trigger red effect
+            setIsPlayerShaking(true); // Trigger shake effect
+            setIsEnemyAttacking(true)
+    
+            // Reset player effects after a delay
+            setTimeout(() => {
+                setIsPlayerAttacked(false);
+                setIsPlayerShaking(false);
+                setIsEnemyAttacking(false)
+            }, 600);
+    
             if (health <= 0) {
                 setGameResult('lose');
                 setIsGameOver(true);
-              
             }
             isDefendingRef.current = false;
             setTimeout(() => {
@@ -309,7 +360,6 @@ function BattlePage() {
             }, 2000);
         }, 1000);
     };
-
     const handleUseItem = async (itemId) => {
         console.log(`Used item ID: ${itemId}`);
         setItemUsed(true);
@@ -403,10 +453,32 @@ function BattlePage() {
                             {enemyHealth} / {maxEnemyHealth}
                         </span>
                     </div>
-
-                    <img src={enemyimg} alt="enemy" className={styles.enemychar} />
-                    <img src={knight} alt="player" className={styles.playchar} />
-                </div>
+                    {isEnemyAttacking ? (
+                            <img 
+                                src={attack_slash} // Show attack_slash when enemy attacks
+                                alt="enemy attack effect" 
+                                className={styles.attackEffect} 
+                                style={{left: "18%"}}
+                            />
+                        ) : null}
+                    {isAttacking ? (
+                            <img 
+                                src={attack_slash} // Show attack_slash when attacking
+                                alt="attack effect" 
+                                className={styles.attackEffect} 
+                            />
+                        ) : null} 
+                        <img 
+                        src={enemyimg} 
+                        alt="enemy" 
+                        className={`${styles.enemychar} ${isEnemyAttacked ? styles.enemyRed : ''} ${isEnemyAttacked ? styles.shake : ''} `} 
+                    />
+                    <img 
+                        src={isAttacking ? knightAttack : knight} // Conditional rendering based on attack state
+                        alt="player" 
+                        className={`${styles.playchar} ${isPlayerAttacked ? styles.playerRed : ''} ${isPlayerShaking ? styles.shake : ''}`} 
+                    />
+                    </div>
 
                 <div className={styles.battleoptions}>
                     <div className={styles.playermoves}>
@@ -502,24 +574,28 @@ function BattlePage() {
                 </div>
             )}
             {isGameOver && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <h2>{gameResult === 'win' ? 'You Win!' : 'You Lose!'}</h2>
-                        <p>{gameResult === 'win' ? 'Congratulations! You defeated the enemy!' : 'Better luck next time!'}</p>
-                        {rewardData && (
-                            <div>
-                                <h3>Your Rewards:</h3>
-                                <p><strong>Coins:</strong> {rewardData.coins}</p>
-                                <p><strong>Experience Points:</strong> {rewardData.exp}</p>
-                            </div>
-                        )}
-                        <button onClick={() => {
-                            setIsGameOver(false);
-                            // Optionally, redirect or reset the game state here
-                        }}>Close</button>
-                    </div>
+            <div className={styles.modal}>
+                <div className={styles.modalContent}>
+                    <h2>{gameResult === 'win' ? 'You Win!' : 'You Lose!'}</h2>
+                    <p>{gameResult === 'win' ? 'Congratulations! You defeated the enemy!' : 'Better luck next time!'}</p>
+                    {rewardData && (
+                        <div>
+                            <h3>Your Rewards:</h3>
+                            <p><strong>Coins:</strong> {rewardData.coins}</p>
+                            <p><strong>Experience Points:</strong> {rewardData.exp}</p>
+                        </div>
+                    )}
+                    <button onClick={() => {
+                        // Call closeModal with the appropriate parameters
+                        closeModal(rewardData.coins, rewardData.exp, rewardData.reward_id, rewardData.claimed);
+                        setIsGameOver(false); // Reset game over state
+                        navigate('/regions')
+                    }}>
+                        Close
+                    </button>
                 </div>
-            )}
+            </div>
+        )}
         </div>
     );
 }
