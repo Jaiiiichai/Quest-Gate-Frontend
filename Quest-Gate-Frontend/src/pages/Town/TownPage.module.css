@@ -107,7 +107,7 @@
     position: absolute;
     top: 13%;
     left: 23%;
-    background-color: #4CAF50;
+    background-color: white;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -115,9 +115,22 @@
     cursor: pointer;
     font-size: 12px;
     margin-top: 20px;
-    width: 90px;
+    width: 50px;
     height: 50px;
-  }
+    background-image: url('../../assets/Town/backpack.png'); /* Path to your backpack image */
+    background-size: cover; /* Makes sure the image covers the button area */
+    background-position: center; /* Centers the image inside the button */
+    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+}
+.inventoryButton:hover{
+    transform: scale(1.1);
+    transition: transform 0.3 ease;
+}
+
+.backpack {
+    display: none; /* If you want to hide this element since the image is set as a background */
+}
+
   
   .inventoryButton:hover {
     background-color: #45a049;

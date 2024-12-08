@@ -122,11 +122,6 @@ const QuestDetailComponent = ({ quest, onBack, maps, enemy, grunt_id, category }
         <h3>{quest.quest_name}</h3>
       </div>
       <p>{quest.description}</p>
-      <div className={styles.rewards}>
-        <p>10xp</p>
-        <p>30 coins</p>
-        <p>1 potion</p>
-      </div>
       {isDataReady ? (
         <Link to="/loading" state={{ targetRoute: '/battle', map: maps, grunt_id: grunt_id, enemy: enemy, category: category }}>
           <button className={styles.backButton}>Accept Quest</button>

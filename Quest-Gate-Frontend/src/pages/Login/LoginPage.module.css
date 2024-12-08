@@ -4,7 +4,7 @@
     padding: 0;
     overflow: hidden;
     image-rendering: pixelated;
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Container */
@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;   
 }
 
 /* Login Form */
@@ -48,13 +49,13 @@
     background-color: transparent; /* Transparent background */
     color: white;
     outline: none;
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 15px;
 }
 
 .formgroup input::placeholder {
     color: #999;
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Poppins', sans-serif
 }
 
 /* Button */
@@ -66,7 +67,7 @@ button {
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'Poppins', sans-serif
 }
 
 button:hover {

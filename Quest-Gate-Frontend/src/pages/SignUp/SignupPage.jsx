@@ -81,7 +81,7 @@ function SignupPage() {
                         />
                     </div>
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Signing Up...' : 'SignUp'}
+                        {loading ? 'Signing Up...' : 'Sign Up'}
                     </button>
                 </form>
                   

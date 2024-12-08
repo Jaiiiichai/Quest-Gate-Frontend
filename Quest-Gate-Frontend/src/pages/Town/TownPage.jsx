@@ -13,6 +13,7 @@ import shop from '../../assets/Town/Shop_Button-removebg-preview.png';
 import coin from '../../assets/Town/coins.png';
 import { Link, useLocation } from 'react-router-dom';
 import { useAvatar } from '../../hooks/AvatarContext';
+import backpack from '../../assets/Town/backpack.png'
 import axios from 'axios';
 import InventoryModal from './InventoryModal'; // Import the modal component
 
@@ -79,7 +80,7 @@ function TownPage() {
 
             {/* Button to trigger the modal */}
             <button className={styles.inventoryButton} onClick={openInventoryModal}>
-                View Inventory
+                 <img src={backpack} alt="backpack" className={styles.backpack} />
             </button>
 
             <div className={styles.coinslot}>

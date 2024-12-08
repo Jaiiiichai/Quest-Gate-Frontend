@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    color: white;   
 }
 .questcontainer{
     height: 80%;
@@ -20,11 +21,12 @@
     display: flex;
     flex-direction: column;
     font-family: 'Courier New', Courier, monospace;
+    padding: 10px;
 }
 .item{
     margin: auto;
     margin-top: 20px;
-    height: 100px;
+    height: 130px;
     width: 80%;
     background-color: #755d2d;
     display: flex;
@@ -32,6 +34,13 @@
     justify-content: space-around;
     border: 10px solid #986e23;
     border-radius: 20px;
+    padding: 10px;
+    text-align: center
+}
+.item:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: transform 0.3 ease
 }
 .questlist{
     overflow-y: auto;
@@ -49,7 +58,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 20px;
 }
 .rewards{
     display: flex;
