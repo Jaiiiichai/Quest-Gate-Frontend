@@ -34,7 +34,8 @@ function LoginPage() {
                 const avatarId = response.data.avatar_id; // Get avatar_id from the response
                 console.log('Avatar ID:', avatarId); 
                 login(avatarId)// You can use this value for further actions, e.g., update state or redirect
-                navigate('/town'); 
+                navigate('/loading', { state: { targetRoute: '/town' } });
+
             } else {
                 setError('Login failed. Please check your credentials and try again.');
             }
@@ -53,8 +54,7 @@ function LoginPage() {
                 <p>Enter your credentials to access your account</p>
                 
                 {/* Step 4: Display success/error messages */}
-                {error && <div className={styles.error}>{error}</div>}
-                {successMessage && <div className={styles.success}>{successMessage}</div>}
+             
 
                 {/* Step 5: Form to capture email and password */}
                 <form onSubmit={handleSubmit}>
@@ -83,6 +83,13 @@ function LoginPage() {
                     <button type="submit" disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
+                    {error && <div className={styles.error} style={{color:'red'}}>{error}</div>}
+                    {successMessage && <div className={styles.success}>{successMessage}</div>}
+
+                    <div className={styles.accCheck}>
+                    <p>Dont have an account?</p>
+                    <p className={styles.loginlink} onClick={()=> navigate('/signup')}>Sign Up</p>
+                </div>
                 </form>
             </div>
         </div>

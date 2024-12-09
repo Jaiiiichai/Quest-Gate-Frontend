@@ -89,6 +89,11 @@ function SignupPage() {
                 {error && <div className={styles.error}>{error}</div>}
                 {successMessage && <div className={styles.success}>{successMessage}</div>}
 
+                <div className={styles.accCheck}>
+                    <p>Already have an account?</p>
+                    <p className={styles.loginlink} onClick={()=> navigate('/login')}>Login</p>
+                </div>
+
             </div>
         </div>
     );

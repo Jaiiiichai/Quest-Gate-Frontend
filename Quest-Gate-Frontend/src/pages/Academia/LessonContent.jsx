@@ -31,7 +31,7 @@ function LessonContent() {
                 </div>
 
                 {/* Pass lesson_id as part of the URL for the quiz page */}
-                <Link to="/" state = {{lessonId: lessonId}}>
+                <Link to="/quiz" state = {{lessonId: lessonId}}>
                     <button className={styles.takeQuizBut}>Take Quiz</button>
                 </Link>
             </div>

@@ -130,6 +130,71 @@
 .backpack {
     display: none; /* If you want to hide this element since the image is set as a background */
 }
+.logoutButton{
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    top: 27%;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensures it's on top of other elements */
+}
+
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modalContent p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.modalContent button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.modalContent button:hover {
+    background-color: #ddd; /* Light gray for hover effect */
+}
+
+.modalContent button:first-child {
+    background-color: #4CAF50; /* Green for "Yes" */
+    color: white;
+}
+
+.modalContent button:first-child:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.modalContent button:last-child {
+    background-color: #f44336; /* Red for "No" */
+    color: white;
+}
+
+.modalContent button:last-child:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
 
   
   .inventoryButton:hover {

@@ -16,6 +16,7 @@ import CreateLessonPage from '../Test/CreateLessonPage';
 import LessonContent from './pages/Academia/LessonContent';
 import QuizPage from './pages/Academia/QuizPage'
 import AddQuizForm from '../Test/AddQuizForm';
+//import LandingPageV2 from './pages/LandingPage/LandingPageV2';
 
 
 
@@ -25,9 +26,9 @@ function App() {
     <div>
     
       <Routes>
-        <Route path="/LandingPage" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/addQuiz" element={<AddQuizForm />} />
-        <Route path="/" element={<QuizPage />} />
+        <Route path="/quiz" element={<QuizPage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/loading" element={<LoadingScreen />} />
         <Route path="/home" element={<HomePage />} />

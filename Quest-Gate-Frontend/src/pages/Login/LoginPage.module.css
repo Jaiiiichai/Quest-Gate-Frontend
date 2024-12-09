@@ -73,3 +73,16 @@ button {
 button:hover {
     background-color: #3e8640;
 }
+.accCheck{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    width: 300px;
+}
+.loginlink{
+    text-decoration: underline;
+}
+.loginlink:hover{
+    color: blue;
+    cursor: pointer;
+}
